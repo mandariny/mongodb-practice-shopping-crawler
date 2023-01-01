@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 import datetime
 import crawler
-import json
 import pymongo
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
+import pprint
 
 app = FastAPI()
 load_dotenv()
@@ -50,3 +50,7 @@ def create_data(query):
         collection.insert_one(insert_data)        
 
     return "success"
+
+@app.get("/read/")
+def read_data(key, value):
+    return collection.find_one({key:value}, {'_id': 0})
